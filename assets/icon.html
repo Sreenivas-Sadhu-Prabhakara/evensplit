@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #31414D; }
+  body { display: grid; place-items: center; }
+  /* 12% safe padding on each side -> mark fills the middle ~76vmin */
+  .mark { width: 76vmin; height: 76vmin; display: block; }
+</style>
+</head>
+<body>
+  <!-- two ledger rules with settled nodes: the evensplit mark -->
+  <svg class="mark" viewBox="0 0 32 32" aria-hidden="true">
+    <line x1="7" y1="12" x2="25" y2="12" stroke="#D98A5A" stroke-width="2.6" stroke-linecap="round"/>
+    <line x1="7" y1="20" x2="25" y2="20" stroke="#2FA37C" stroke-width="2.6" stroke-linecap="round"/>
+    <circle cx="7" cy="12" r="2.6" fill="#D98A5A"/>
+    <circle cx="25" cy="20" r="2.6" fill="#2FA37C"/>
+  </svg>
+</body>
+</html>

@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+  <title>evensplit — settle shared rent &amp; bills in the fewest transfers</title>
+  <meta name="description" content="A calm rent &amp; shared-bill splitter for roommates. Track who paid for what, split equally, by shares, or by exact amounts — then settle who owes whom in the fewest transfers. Private and offline.">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://sreenivas-sadhu-prabhakara.github.io/evensplit/">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Sreenivas Sadhu Prabhakara">
+  <meta name="keywords" content="bill splitter, rent splitter, split expenses, roommate expenses, who owes whom, settle up, shared house bills, split rent by room size, minimum transfers, expense sharing app">
+  <meta name="theme-color" content="#F6F4EF" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#222D34" media="(prefers-color-scheme: dark)">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="evensplit">
+  <meta property="og:title" content="evensplit — settle shared rent &amp; bills in the fewest transfers">
+  <meta property="og:description" content="Track who paid for what, split equally, by shares, or by exact amounts — then settle who owes whom in the fewest transfers. Private and fully offline.">
+  <meta property="og:url" content="https://sreenivas-sadhu-prabhakara.github.io/evensplit/">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://sreenivas-sadhu-prabhakara.github.io/evensplit/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="evensplit — who owes whom, settled in the fewest transfers">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="evensplit — settle shared rent &amp; bills in the fewest transfers">
+  <meta name="twitter:description" content="Track who paid for what, split equally, by shares, or by exact amounts — then settle who owes whom in the fewest transfers. Private and fully offline.">
+  <meta name="twitter:image" content="https://sreenivas-sadhu-prabhakara.github.io/evensplit/og-image.png">
+  <meta name="twitter:image:alt" content="evensplit — who owes whom, settled in the fewest transfers">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Structured data (data block; not affected by script-src) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "evensplit",
+    "description": "A client-side rent and shared-bill splitter for roommates. Track who paid for what with equal, share-weighted, or exact splits, then settle who owes whom in the fewest transfers. Private, offline, no accounts.",
+    "url": "https://sreenivas-sadhu-prabhakara.github.io/evensplit/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Any (modern web browser)",
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "isAccessibleForFree": true,
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "license": "https://opensource.org/licenses/MIT",
+    "author": { "@type": "Person", "name": "Sreenivas Sadhu Prabhakara" },
+    "softwareVersion": "0.1.0",
+    "featureList": [
+      "Multiple groups or houses, stored separately",
+      "Equal, share-weighted, and exact expense splits",
+      "Cent-exact reconciliation with no lost or extra rounding",
+      "Net balances showing who is owed and who owes",
+      "Minimum-transfer settlement (fewest payments to clear the group)",
+      "Copyable plain-text summary to share in a chat",
+      "Runs 100% offline in your browser"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How does evensplit settle up in the fewest transfers?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It totals what each person paid and what they owe, then repeatedly matches the person owed the most against the person who owes the most. Each match clears at least one person completely, so the whole group settles with a minimal set of payments instead of everyone paying everyone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I split rent by room size instead of equally?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Choose the Shares split and give each person a weight — for example the square footage or a simple 2:1:1 ratio. evensplit divides the amount in proportion to the weights and reconciles the cents so the shares add up to the exact total."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do the splits round correctly to the cent?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. evensplit uses largest-remainder reconciliation: it rounds each share down, then hands the leftover cents to the people with the largest fractional remainders. Every split adds up to the expense total exactly, with no cent lost or invented."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data private?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Completely. evensplit runs entirely in your browser and stores your groups only in this device's local storage. A strict Content-Security-Policy blocks every network request, so nothing about your house or money is ever sent anywhere."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if I remove someone who has expenses?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "evensplit keeps their past expenses intact for the record and marks them as a former member, so your history and totals still reconcile. You just can't add new expenses that involve them."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to the ledger</a>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero" id="top">
+    <div class="hero__inner">
+      <div class="hero__lead">
+        <a class="brand" href="#top" aria-label="evensplit home">
+          <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+            <rect x="1" y="1" width="30" height="30" rx="8" class="brand__bg"/>
+            <line x1="8" y1="12" x2="24" y2="12" class="brand__rule brand__rule--clay"/>
+            <line x1="8" y1="20" x2="24" y2="20" class="brand__rule brand__rule--green"/>
+            <circle cx="8" cy="12" r="2.1" class="brand__node brand__node--clay"/>
+            <circle cx="24" cy="20" r="2.1" class="brand__node brand__node--green"/>
+          </svg>
+          <span class="brand__word">evensplit</span>
+        </a>
+        <p class="eyebrow">Shared rent &amp; bills &middot; roommate ledger &middot; offline</p>
+        <h1 class="hero__title">Who owes whom, settled in the <span class="hero__accent">fewest transfers.</span></h1>
+        <p class="hero__lede">
+          Log what each housemate paid, split it equally, by room-size shares, or exact amounts&mdash;then
+          evensplit works out the shortest list of payments that clears the whole house. No accounts, no
+          network; every figure stays on this device.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#expense-form">Add an expense</a>
+          <a class="btn btn--quiet" href="#settlement">See who pays whom</a>
+        </div>
+      </div>
+
+      <!-- Live ledger sample — the signature receipt motif -->
+      <aside class="receipt" aria-label="Example settlement">
+        <div class="receipt__head">
+          <span class="receipt__title">Flat 3B &middot; example</span>
+          <span class="receipt__tag">settled</span>
+        </div>
+        <ul class="receipt__rows">
+          <li class="ledger-row"><span class="ledger-row__name">Ali</span><span class="ledger-row__arrow" aria-hidden="true">pays</span><span class="ledger-row__to">Ben</span><span class="ledger-row__amt">₹1,240</span></li>
+          <li class="ledger-row"><span class="ledger-row__name">Priya</span><span class="ledger-row__arrow" aria-hidden="true">pays</span><span class="ledger-row__to">Ben</span><span class="ledger-row__amt">₹860</span></li>
+          <li class="ledger-row"><span class="ledger-row__name">Priya</span><span class="ledger-row__arrow" aria-hidden="true">pays</span><span class="ledger-row__to">Chen</span><span class="ledger-row__amt">₹315</span></li>
+        </ul>
+        <p class="receipt__foot">3 payments clear a 4-person house of 11 shared bills.</p>
+      </aside>
+    </div>
+  </header>
+
+  <main id="workspace">
+    <!-- ============ GROUP BAR ============ -->
+    <section class="groupbar" aria-label="House &amp; currency">
+      <div class="groupbar__inner">
+        <div class="groupbar__houses">
+          <label class="field field--inline" for="groupSelect">
+            <span class="field__label">House</span>
+            <span class="select">
+              <select id="groupSelect" aria-label="Choose a house"></select>
+            </span>
+          </label>
+          <div class="groupbar__btns">
+            <button type="button" class="btn btn--quiet btn--sm" id="newGroupBtn">New house</button>
+            <button type="button" class="btn btn--quiet btn--sm" id="renameGroupBtn">Rename</button>
+            <button type="button" class="btn btn--danger btn--sm" id="deleteGroupBtn">Delete</button>
+          </div>
+        </div>
+        <label class="field field--inline field--cur" for="currencyInput">
+          <span class="field__label">Currency</span>
+          <input type="text" id="currencyInput" class="input input--cur" maxlength="3" value="₹" aria-label="Currency symbol" autocomplete="off" spellcheck="false">
+        </label>
+      </div>
+    </section>
+
+    <div class="grid">
+      <!-- ============ LEFT: PEOPLE + EXPENSE FORM ============ -->
+      <div class="col col--input">
+        <!-- People -->
+        <section class="card" aria-labelledby="peopleHeading">
+          <div class="card__head">
+            <h2 class="card__title" id="peopleHeading">Housemates</h2>
+            <span class="card__count" id="peopleCount">0</span>
+          </div>
+          <form class="addperson" id="addPersonForm" novalidate>
+            <label class="sr-only" for="personName">New housemate name</label>
+            <input type="text" id="personName" class="input" placeholder="Add a housemate…" autocomplete="off" maxlength="40">
+            <button type="submit" class="btn btn--primary btn--sm">Add</button>
+          </form>
+          <ul class="people" id="peopleList"></ul>
+          <p class="hint" id="peopleHint">Add everyone who shares bills. You need at least two people to split anything.</p>
+        </section>
+
+        <!-- Expense form -->
+        <section class="card" aria-labelledby="expenseHeading" id="expense-form">
+          <div class="card__head">
+            <h2 class="card__title" id="expenseHeading">Add an expense</h2>
+          </div>
+          <form class="expense" id="expenseForm" novalidate>
+            <div class="field">
+              <label class="field__label" for="expDesc">What was it for?</label>
+              <input type="text" id="expDesc" class="input" placeholder="e.g. October rent, groceries, wifi" autocomplete="off" maxlength="80" required>
+            </div>
+
+            <div class="expense__row">
+              <div class="field field--amt">
+                <label class="field__label" for="expAmount">Amount</label>
+                <div class="amtwrap">
+                  <span class="amtwrap__sym" id="amtSym" aria-hidden="true">₹</span>
+                  <input type="text" id="expAmount" class="input input--amt" inputmode="decimal" placeholder="0.00" autocomplete="off" required aria-describedby="amtSym">
+                </div>
+              </div>
+              <div class="field field--payer">
+                <label class="field__label" for="expPayer">Paid by</label>
+                <span class="select">
+                  <select id="expPayer" aria-label="Who paid"></select>
+                </span>
+              </div>
+            </div>
+
+            <fieldset class="split">
+              <legend class="field__label">Split method</legend>
+              <div class="segmented" role="radiogroup" aria-label="Split method">
+                <label class="seg"><input type="radio" name="splitmethod" value="equal" checked><span>Equal</span></label>
+                <label class="seg"><input type="radio" name="splitmethod" value="shares"><span>Shares</span></label>
+                <label class="seg"><input type="radio" name="splitmethod" value="exact"><span>Exact</span></label>
+              </div>
+              <p class="hint" id="splitHint">Split evenly among everyone you tick below.</p>
+              <div class="participants" id="participants" role="group" aria-label="Who shares this expense"></div>
+              <p class="split__reconcile" id="reconcile" aria-live="polite"></p>
+            </fieldset>
+
+            <div class="expense__actions">
+              <button type="submit" class="btn btn--primary" id="addExpenseBtn">Add expense</button>
+              <button type="button" class="btn btn--quiet" id="cancelEditBtn" hidden>Cancel edit</button>
+            </div>
+            <p class="formerror" id="expenseError" role="alert" aria-live="assertive"></p>
+          </form>
+        </section>
+      </div>
+
+      <!-- ============ RIGHT: BALANCES + SETTLEMENT + LOG ============ -->
+      <div class="col col--output">
+        <!-- Balances -->
+        <section class="card" aria-labelledby="balHeading">
+          <div class="card__head">
+            <h2 class="card__title" id="balHeading">Balances</h2>
+            <span class="card__hint-inline">paid &minus; owed</span>
+          </div>
+          <div class="tablewrap">
+            <table class="balances" id="balancesTable">
+              <caption class="sr-only">Net balance for each housemate: amount paid minus amount owed.</caption>
+              <thead>
+                <tr>
+                  <th scope="col">Housemate</th>
+                  <th scope="col" class="num">Paid</th>
+                  <th scope="col" class="num">Share</th>
+                  <th scope="col" class="num">Net</th>
+                </tr>
+              </thead>
+              <tbody id="balancesBody"></tbody>
+            </table>
+          </div>
+          <p class="empty" id="balancesEmpty">No expenses yet. Add one and balances appear here.</p>
+        </section>
+
+        <!-- Settlement — the headline -->
+        <section class="card card--settle" aria-labelledby="settleHeading" id="settlement">
+          <div class="card__head">
+            <h2 class="card__title" id="settleHeading">Settle up</h2>
+            <button type="button" class="btn btn--quiet btn--sm" id="copyBtn">Copy summary</button>
+          </div>
+          <ol class="settlement" id="settlementList"></ol>
+          <p class="settlement__note" id="settlementNote"></p>
+        </section>
+
+        <!-- Expense log -->
+        <section class="card" aria-labelledby="logHeading">
+          <div class="card__head">
+            <h2 class="card__title" id="logHeading">Expenses</h2>
+            <span class="card__count" id="expenseCount">0</span>
+          </div>
+          <ul class="log" id="expenseLog"></ul>
+          <p class="empty" id="logEmpty">Nothing logged yet.</p>
+        </section>
+      </div>
+    </div>
+
+    <!-- Copy confirmation (screen-reader + visual toast) -->
+    <p class="toast" id="toast" role="status" aria-live="polite" hidden></p>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="foot">
+    <div class="foot__inner">
+      <p class="foot__disclaimer">
+        <strong>For informal splitting between friends and roommates only.</strong> evensplit is not a
+        financial, accounting, tax, or payments product, and moves no money. Figures are a convenience&mdash;always
+        verify them yourselves before anyone pays anyone.
+      </p>
+      <p class="foot__meta">
+        <span>Works 100% offline</span><span class="foot__dot">&middot;</span>
+        <span>No network, no accounts</span><span class="foot__dot">&middot;</span>
+        <span>Saved only on your device</span><span class="foot__dot">&middot;</span>
+        <span>MIT&nbsp;License</span><span class="foot__dot">&middot;</span>
+        <span>&copy; 2026 Sreenivas&nbsp;Sadhu&nbsp;Prabhakara</span>
+      </p>
+    </div>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
