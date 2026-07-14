@@ -231,9 +231,6 @@ select:focus-visible,
   border-bottom: 2px dotted var(--rule);
   align-self: flex-end;
 }
-.ledger-row {
-  /* let the leader stretch: the :to::after is a flex child, so wrap in flex already done */
-}
 .ledger-row__amt {
   margin-left: auto;
   font-weight: 700;

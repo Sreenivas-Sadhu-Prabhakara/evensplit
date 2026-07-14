@@ -998,11 +998,9 @@
 
     // amount + method changes drive the live reconcile preview
     $("#expAmount").addEventListener("input", updateReconcile);
+    // Switching split method rebuilds the participant inputs (keeping selections).
     $$('input[name=splitmethod]').forEach(function (r) {
-      r.addEventListener("change", function () {
-        if (editingId) { renderParticipants(); }  // rebuild inputs for new method
-        else { renderParticipants(); }
-      });
+      r.addEventListener("change", function () { renderParticipants(); });
     });
 
     renderAll();
